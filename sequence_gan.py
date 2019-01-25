@@ -120,9 +120,11 @@ def main():
 
     print 'Start pre-training discriminator...'
     # Train 3 epoch on the generated data and do this for 50 times
-    for _ in range(50):
+    for epoch in range(50):
         generate_samples(sess, generator, BATCH_SIZE, generated_num, negative_file)
         dis_data_loader.load_train_data(positive_file, negative_file)
+        if epoch % 5 == 0:
+            print 'pre-train discriminator epoch ', epoch
         for _ in range(3):
             dis_data_loader.reset_pointer()
             for it in xrange(dis_data_loader.num_batch):
